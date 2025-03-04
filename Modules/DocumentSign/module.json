@@ -1,0 +1,16 @@
+{
+    "name": "DocumentSign",
+    "alias": "documentsign",
+    "description": "Document Sign functionality",
+    "keywords": [],
+    "active": 0,
+    "order": 0,
+    "providers": [
+         "Modules\\DocumentSign\\Providers\\DocumentSignServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+
+    ],
+    "requires": []
+}
