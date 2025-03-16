@@ -41,7 +41,7 @@ jobs:
       run: cp .env.example .env
 
     - name: Install Dependencies
-      run: composer install --no-progress --no-interaction --prefer-dist
+      run: composer install --no-progress --no-interaction --prefer-dist || composer update --no-progress --no-interaction --prefer-dist
 
     - name: Generate Application Key
       run: php artisan key:generate
