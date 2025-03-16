@@ -1,0 +1,36 @@
+name: Simple PHP CI/CD
+
+on:
+  push:
+    branches: [ "uat" ] # Deploy only on UAT branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@2
+      with:
+        php-version: '8.0'
+    
+    - name: Deploy to Server via SSH
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.UAT_SERVER_HOST }}
+        username: ${{ secrets.UAT_SERVER_USER }}
+        key: ${{ secrets.UAT_SERVER_SSH_KEY }}
+        source: "index.php"
+        target: "/home/shwetnir/public_html/newtestcicd"
+    
+    - name: Restart Web Server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.UAT_SERVER_HOST }}
+        username: ${{ secrets.UAT_SERVER_USER }}
+        key: ${{ secrets.UAT_SERVER_SSH_KEY }}
+        script: |
+          sudo systemctl restart apache2 || sudo systemctl restart nginx
